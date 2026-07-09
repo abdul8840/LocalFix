@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const config = {
-  user: process.env.DB_USER,
+  user: process.env.DB_USER || "sa",
   password: process.env.DB_PASSWORD,
 
-  server: "127.0.0.1",
+  server: process.env.DB_SERVER || "localhost",
   port: 1433,
 
-  database: "master",
+  database: "LocalFixDB",
 
   options: {
     encrypt: false,
