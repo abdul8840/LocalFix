@@ -4,6 +4,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 
+import healthRoutes from "./routes/health.routes.js";
+import { errorHandler, notFound } from "./middleware/errorHandler.js";
+
 const app = express();
 
 // ---------- Global Middleware ----------
@@ -26,6 +29,9 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
+// ---------- Routes ----------
+app.use("/api/health", healthRoutes);
+
 // Root
 app.get("/", (req, res) => {
   res.json({
@@ -34,5 +40,9 @@ app.get("/", (req, res) => {
     version: "1.0.0",
   });
 });
+
+// 404 + error handling
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
