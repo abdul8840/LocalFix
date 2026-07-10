@@ -1,7 +1,20 @@
-import { Link } from "react-router-dom";
-import { Wrench } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Wrench, LogOut } from "lucide-react";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const dashboardPath =
+    user?.role === "admin" ? "/admin" :
+    user?.role === "worker" ? "/worker" : "/customer";
+
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
@@ -21,18 +34,34 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link
-            to="/login"
-            className="text-sm font-medium text-gray-700 hover:text-blue-600"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="text-sm font-medium bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            Register
-          </Link>
+          {user ? (
+            <>
+              <Link
+                to={dashboardPath}
+                className="text-sm font-medium bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-red-600"
+              >
+                <LogOut size={16} /> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm font-medium text-gray-700 hover:text-blue-600">
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="text-sm font-medium bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              >
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>
