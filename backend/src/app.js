@@ -11,6 +11,8 @@ import categoryRoutes from "./routes/category.routes.js";
 import workerRoutes from "./routes/worker.routes.js";
 import serviceRequestRoutes from "./routes/serviceRequest.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
+import fraudRoutes from "./routes/fraud.routes.js";
 
 const app = express();
 
@@ -41,6 +43,8 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/workers", workerRoutes);
 app.use("/api/requests", serviceRequestRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/fraud", fraudRoutes);
 
 // Root
 app.get("/", (req, res) => {
