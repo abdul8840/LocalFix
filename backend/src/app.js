@@ -7,6 +7,10 @@ import rateLimit from "express-rate-limit";
 import healthRoutes from "./routes/health.routes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import authRoutes from "./routes/auth.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
+import workerRoutes from "./routes/worker.routes.js";
+import serviceRequestRoutes from "./routes/serviceRequest.routes.js";
+import reviewRoutes from "./routes/review.routes.js";
 
 const app = express();
 
@@ -33,6 +37,10 @@ app.use("/api", limiter);
 // ---------- Routes ----------
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/workers", workerRoutes);
+app.use("/api/requests", serviceRequestRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Root
 app.get("/", (req, res) => {
